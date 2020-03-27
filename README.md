@@ -1,4 +1,4 @@
-# nfc-card-reader [![](https://jitpack.io/v/vickyramachandra/nfc-card-reader.svg)](https://jitpack.io/#vickyramachandra/nfc-card-reader)
+# nfc-card-reader [![](https://jitpack.io/v/vickyramachandra/nfc-card-reader.svg)](https://jitpack.io/#vickyramachandra/nfc-card-reader) [![License](http://img.shields.io/:License-MIT-blue.svg)]()
 
 An Android Library to read info from NFC enabled cards
 
