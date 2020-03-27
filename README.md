@@ -4,6 +4,24 @@ An Android Library to read info from NFC enabled cards
 
 Inspired from [EMV-NFC-Paycard-Enrollment](https://github.com/devnied/EMV-NFC-Paycard-Enrollment) and [Credit-Card-NFC-Reader](https://github.com/pro100svitlo/Credit-Card-NFC-Reader)
 
+### Getting started
+Add this to your project's `build.gradle`
+```groovy
+allprojects {
+  repositories {
+    ...
+    maven { url 'https://jitpack.io' }
+  }
+}
+```
+
+And include the dependency in your module's `build.gradle`
+```groovy
+dependencies {
+  implementation 'com.github.vickyramachandra:nfc-card-reader:1.0.0'
+}
+```
+
 ### License
 MIT License
 
