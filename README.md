@@ -2,6 +2,8 @@
 
 An Android Library to read info from NFC enabled cards
 
+Inspired from [EMV-NFC-Paycard-Enrollment](https://github.com/devnied/EMV-NFC-Paycard-Enrollment) and [Credit-Card-NFC-Reader](https://github.com/pro100svitlo/Credit-Card-NFC-Reader)
+
 ### License
 MIT License
 
