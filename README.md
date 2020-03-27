@@ -22,6 +22,48 @@ dependencies {
 }
 ```
 
+### Usage
+Make sure to handle if the device has NFC capabilities and it is enabled. In the Activity
+
+```java
+public class MainActivity extends AppCompatActivity {
+
+  private NFCCardManager nfcCardManager;
+  private NFCCardReader nfcCardReader;
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+    nfcCardManager = new NFCCardManager(this);
+    nfcCardReader = new NFCCardReader();
+  }
+  
+  @Override
+  protected void onResume() {
+    super.onResume();
+    nfcCardManager.enableDispatch();
+  }
+
+  @Override
+  protected void onPause() {
+    super.onPause();
+    nfcCardManager.disableDispatch();
+  }
+
+  @Override
+  protected void onNewIntent(Intent intent) {
+    super.onNewIntent(intent);
+    // When the card is brought closer to the device, a new intent with TAG info is dispatched
+    Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+    nfcCardReader.setTag(tag); // set the tag
+    NFCCardResponse cardResponse = nfcCardReader.readCard(); // read the card data
+    if (cardResponse != null && cardResponse.getEmvCard() != null) {
+      // use card data such as cardNumber, expire date etc
+    }
+  }
+```
+
 ### License
 MIT License
 
