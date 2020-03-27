@@ -28,7 +28,6 @@ package com.vignesh.library.model.enums;
  * System.out.println("ISO 3166-1 numeric code = " + cc.{@link #getNumeric()});    <span style="color: darkgreen;">// 392</span>
  * </pre>
  * 
- * @author Takahiko Kawasaki
  */
 public enum CountryCodeEnum implements IKeyEnum {
 	// @formatter:off

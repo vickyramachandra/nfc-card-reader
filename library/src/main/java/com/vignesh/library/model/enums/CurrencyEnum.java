@@ -11,7 +11,6 @@ package com.vignesh.library.model.enums;
  * This class/code is Public Domain (2012). Feel free to do anything you please. Consider visiting our website at <a
  * href="http://www.noblemaster.com">Noble Master</a>.
  * 
- * @author noblemaster (Christoph Aschwanden)
  */
 public enum CurrencyEnum implements IKeyEnum {
 

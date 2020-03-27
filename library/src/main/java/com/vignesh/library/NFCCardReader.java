@@ -15,7 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 
-public class CardNfcReader {
+public class NFCCardReader {
 
     public void setTag(Tag tag) {
         this.tag = tag;
@@ -29,42 +29,42 @@ public class CardNfcReader {
 
 
     @Nullable
-    public CardNfcResponse readCard() {
+    public NFCCardResponse readCard() {
         if (tag != null) {
-            CardNfcResponse cardNfcResponse = null;
+            NFCCardResponse nfcCardResponse = null;
             if (tag.toString().equals(NFC_A_TAG) || tag.toString().equals(NFC_B_TAG)) {
                 try {
-                    cardNfcResponse = getCardInfo();
+                    nfcCardResponse = getCardInfo();
                 } catch (Exception e) {
-                    Log.e(CardNfcReader.class.getName(), e.getMessage(), e);
+                    Log.e(NFCCardReader.class.getName(), e.getMessage(), e);
                 }
 
                 if (!isException) {
-                    if (cardNfcResponse != null && cardNfcResponse.getEmvCard() != null) {
-                        EmvCard emvCard = cardNfcResponse.getEmvCard();
+                    if (nfcCardResponse != null && nfcCardResponse.getEmvCard() != null) {
+                        EmvCard emvCard = nfcCardResponse.getEmvCard();
                         if (StringUtils.isNotBlank(emvCard.getCardNumber())) {
-                            return CardNfcResponse.createResponse(emvCard);
+                            return NFCCardResponse.createResponse(emvCard);
                         } else if (emvCard.isNfcLocked()) {
-                            return CardNfcResponse.createError(CardNfcError.CARD_LOCKED_WITH_NFC);
+                            return NFCCardResponse.createError(NFCCardError.CARD_LOCKED_WITH_NFC);
                         }
                     } else {
-                        return CardNfcResponse.createError(CardNfcError.UNKNOWN_EMV_CARD);
+                        return NFCCardResponse.createError(NFCCardError.UNKNOWN_EMV_CARD);
                     }
                 } else {
-                    return CardNfcResponse.createError(CardNfcError.DONOT_MOVE_CARD_SO_FAST);
+                    return NFCCardResponse.createError(NFCCardError.DONOT_MOVE_CARD_SO_FAST);
                 }
             } else {
-                return CardNfcResponse.createError(CardNfcError.UNKNOWN_EMV_CARD);
+                return NFCCardResponse.createError(NFCCardError.UNKNOWN_EMV_CARD);
             }
         }
         return null;
     }
 
-    private CardNfcResponse getCardInfo(){
+    private NFCCardResponse getCardInfo(){
         IsoDep isoDep = IsoDep.get(tag);
         Provider provider = new Provider();
         if (isoDep == null) {
-            return CardNfcResponse.createError(CardNfcError.DONOT_MOVE_CARD_SO_FAST);
+            return NFCCardResponse.createError(NFCCardError.DONOT_MOVE_CARD_SO_FAST);
         }
 
         isException = false;
@@ -78,13 +78,13 @@ public class CardNfcReader {
             EmvParser parser = new EmvParser(provider, true);
             EmvCard card = parser.readEmvCard();
             if (card != null) {
-                return CardNfcResponse.createResponse(card);
+                return NFCCardResponse.createResponse(card);
             }
         } catch (IOException e) {
             isException = true;
         } finally {
             IOUtils.closeQuietly(isoDep);
         }
-        return CardNfcResponse.createError(CardNfcError.UNKNOWN_EMV_CARD);
+        return NFCCardResponse.createError(NFCCardError.UNKNOWN_EMV_CARD);
     }
 }
