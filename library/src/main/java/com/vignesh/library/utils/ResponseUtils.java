@@ -9,11 +9,6 @@ import com.vignesh.library.enums.SwEnum;
 public final class ResponseUtils {
 
 	/**
-	 * Class logger
-	 */
-	//private static final Logger LOGGER = LoggerFactory.getLogger(ResponseUtils.class);
-
-	/**
 	 * Method used to check if the last command return SW1SW2 == 9000
 	 * 
 	 * @param pByte

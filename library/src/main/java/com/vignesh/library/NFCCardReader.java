@@ -82,6 +82,7 @@ public class NFCCardReader {
             }
         } catch (IOException e) {
             isException = true;
+            Log.e(NFCCardReader.class.getName(), e.getMessage(), e);
         } finally {
             IOUtils.closeQuietly(isoDep);
         }

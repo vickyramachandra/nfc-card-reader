@@ -1,5 +1,7 @@
 package com.vignesh.library.utils;
 
+import android.util.Log;
+
 import com.vignesh.library.model.enums.IKeyEnum;
 
 /**
@@ -8,9 +10,9 @@ import com.vignesh.library.model.enums.IKeyEnum;
 public final class EnumUtils {
 
 	/**
-	 * Class logger
+	 * TAG
 	 */
-	//private static final Logger LOGGER = LoggerFactory.getLogger(EnumUtils.class);
+	private static final String TAG = EnumUtils.class.getName();
 
 	/**
 	 * Get the value of and enum from his key
@@ -28,7 +30,7 @@ public final class EnumUtils {
 				return (T) val;
 			}
 		}
-		//LOGGER.error("Unknow value:" + pKey + " for Enum:" + pClass.getName());
+		Log.e(TAG, "Unknow value:" + pKey + " for Enum:" + pClass.getName());
 		return null;
 	}
 

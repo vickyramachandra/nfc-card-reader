@@ -12,11 +12,6 @@ import java.util.regex.Pattern;
 public final class TrackUtils {
 
 	/**
-	 * Class logger
-	 */
-	//private static final Logger LOGGER = LoggerFactory.getLogger(TrackUtils.class);
-
-	/**
 	 * Track 2 pattern
 	 */
 	private static final Pattern TRACK2_PATTERN = Pattern.compile("([0-9]{1,19})D([0-9]{4})([0-9]{3})?(.*)");

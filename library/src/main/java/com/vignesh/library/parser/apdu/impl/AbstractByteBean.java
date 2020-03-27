@@ -27,9 +27,9 @@ public abstract class AbstractByteBean<T> extends AbstractData implements IFile 
 	private static final long serialVersionUID = -2016039522844322383L;
 
 	/**
-	 * Logger of the class
+	 * TAG
 	 */
-	//private static final Logger LOGGER = LoggerFactory.getLogger(AbstractByteBean.class.getName());
+	private static final String TAG = AbstractByteBean.class.getName();
 
 	/**
 	 * Method to get the annotation set from the current class
@@ -96,9 +96,9 @@ public abstract class AbstractByteBean<T> extends AbstractData implements IFile 
 			try {
 				field.set(pData, pValue);
 			} catch (IllegalArgumentException e) {
-				Log.d("SET FIELD ERROR", "Parameters of fied.set are not valid", e);
+				Log.d(TAG, "Parameters of fied.set are not valid", e);
 			} catch (IllegalAccessException e) {
-				Log.d("SET FIELD ERROR", "Impossible to set the Field :" + field.getName(), e);
+				Log.d(TAG, "Impossible to set the Field :" + field.getName(), e);
 			}
 		}
 	}
