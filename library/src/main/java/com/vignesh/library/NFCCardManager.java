@@ -11,9 +11,9 @@ import android.nfc.tech.NfcB;
 
 public class NFCCardManager {
 
-  private final NfcAdapter mNfcAdapter;
-  private final PendingIntent mPendingIntent;
-  private final Activity mActivity;
+  private final NfcAdapter nfcAdapter;
+  private final PendingIntent pendingIntent;
+  private final Activity activity;
 
   private static final IntentFilter[] INTENT_FILTER = new IntentFilter[] {
       new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED),
@@ -21,22 +21,22 @@ public class NFCCardManager {
   private static final String[][] TECH_LIST = new String[][] { {
       NfcA.class.getName(), NfcB.class.getName(), IsoDep.class.getName() } };
 
-  public NFCCardManager(final Activity pActivity) {
-    mActivity = pActivity;
-    mNfcAdapter = NfcAdapter.getDefaultAdapter(mActivity);
-    mPendingIntent = PendingIntent.getActivity(mActivity, 0,
-        new Intent(mActivity, mActivity.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+  public NFCCardManager(final Activity activity) {
+    this.activity = activity;
+    nfcAdapter = NfcAdapter.getDefaultAdapter(activity);
+    pendingIntent = PendingIntent.getActivity(activity, 0,
+        new Intent(activity, activity.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
   }
 
   public void disableDispatch() {
-    if (mNfcAdapter != null) {
-      mNfcAdapter.disableForegroundDispatch(mActivity);
+    if (nfcAdapter != null) {
+      nfcAdapter.disableForegroundDispatch(activity);
     }
   }
 
   public void enableDispatch() {
-    if (mNfcAdapter != null) {
-      mNfcAdapter.enableForegroundDispatch(mActivity, mPendingIntent, INTENT_FILTER, TECH_LIST);
+    if (nfcAdapter != null) {
+      nfcAdapter.enableForegroundDispatch(activity, pendingIntent, INTENT_FILTER, TECH_LIST);
     }
   }
 }
