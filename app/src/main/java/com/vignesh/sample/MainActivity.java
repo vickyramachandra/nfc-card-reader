@@ -44,11 +44,12 @@ public class MainActivity extends AppCompatActivity {
   protected void onNewIntent(Intent intent) {
     super.onNewIntent(intent);
     Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-    nfcCardReader.setTag(tag);
-    NFCCardResponse cardResponse = nfcCardReader.readCard();
-    if (cardResponse != null && cardResponse.getEmvCard() != null) {
-      textView.setText(cardResponse.getEmvCard().getCardNumber() + " " +
-          cardResponse.getEmvCard().getExpireDate());
+    if (tag != null) {
+      NFCCardResponse cardResponse = nfcCardReader.readCard(tag);
+      if (cardResponse != null && cardResponse.getEmvCard() != null) {
+        textView.setText(cardResponse.getEmvCard().getCardNumber() + " " +
+            cardResponse.getEmvCard().getExpireDate());
+      }
     }
   }
 }
