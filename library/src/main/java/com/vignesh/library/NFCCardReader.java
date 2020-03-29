@@ -17,24 +17,19 @@ import java.io.IOException;
 
 public class NFCCardReader {
 
-    public void setTag(Tag tag) {
-        this.tag = tag;
-    }
-
     private final static String NFC_A_TAG = "TAG: Tech [android.nfc.tech.IsoDep, android.nfc.tech.NfcA]";
     private final static String NFC_B_TAG = "TAG: Tech [android.nfc.tech.IsoDep, android.nfc.tech.NfcB]";
 
-    private Tag tag;
     private boolean isException;
 
 
     @Nullable
-    public NFCCardResponse readCard() {
+    public NFCCardResponse readCard(Tag tag) {
         if (tag != null) {
             NFCCardResponse nfcCardResponse = null;
             if (tag.toString().equals(NFC_A_TAG) || tag.toString().equals(NFC_B_TAG)) {
                 try {
-                    nfcCardResponse = getCardInfo();
+                    nfcCardResponse = getCardInfo(tag);
                 } catch (Exception e) {
                     Log.e(NFCCardReader.class.getName(), e.getMessage(), e);
                 }
@@ -60,7 +55,7 @@ public class NFCCardReader {
         return null;
     }
 
-    private NFCCardResponse getCardInfo(){
+    private NFCCardResponse getCardInfo(Tag tag){
         IsoDep isoDep = IsoDep.get(tag);
         Provider provider = new Provider();
         if (isoDep == null) {
