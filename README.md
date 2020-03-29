@@ -56,10 +56,11 @@ public class MainActivity extends AppCompatActivity {
     super.onNewIntent(intent);
     // When the card is brought closer to the device, a new intent with TAG info is dispatched
     Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-    nfcCardReader.setTag(tag); // set the tag
-    NFCCardResponse cardResponse = nfcCardReader.readCard(); // read the card data
-    if (cardResponse != null && cardResponse.getEmvCard() != null) {
-      // use card data such as cardNumber, expire date etc
+    if (tag != null) {
+      NFCCardResponse cardResponse = nfcCardReader.readCard(tag); // read the card data with tag
+      if (cardResponse != null && cardResponse.getEmvCard() != null) {
+        // use card data such as cardNumber, expire date etc
+      }
     }
   }
 ```
