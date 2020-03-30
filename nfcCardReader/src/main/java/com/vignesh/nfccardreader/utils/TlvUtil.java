@@ -243,21 +243,21 @@ public final class TlvUtil {
 		StringBuilder buf = new StringBuilder();
 
 		switch (tag.getTagValueType()) {
-		case TagValueTypeEnum.TEXT:
+		case TEXT:
 			buf.append("=");
 			buf.append(new String(value));
 			break;
-		case TagValueTypeEnum.NUMERIC:
+		case NUMERIC:
 			buf.append("NUMERIC");
 			break;
-		case TagValueTypeEnum.BINARY:
+		case BINARY:
 			buf.append("BINARY");
 			break;
-		case TagValueTypeEnum.MIXED:
+		case MIXED:
 			buf.append("=");
 			buf.append(getSafePrintChars(value));
 			break;
-		case TagValueTypeEnum.DOL:
+		case DOL:
 			buf.append("");
 			break;
 		default:
