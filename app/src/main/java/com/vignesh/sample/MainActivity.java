@@ -8,9 +8,9 @@ import android.nfc.Tag;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.vignesh.library.NFCCardManager;
-import com.vignesh.library.NFCCardReader;
-import com.vignesh.library.NFCCardResponse;
+import com.vignesh.nfccardreader.NFCCardManager;
+import com.vignesh.nfccardreader.NFCCardReader;
+import com.vignesh.nfccardreader.NFCCardResponse;
 
 public class MainActivity extends AppCompatActivity {
 
