@@ -9,7 +9,7 @@ import android.nfc.tech.IsoDep;
 import android.nfc.tech.NfcA;
 import android.nfc.tech.NfcB;
 
-public class NFCCardManager {
+public class NfcCardManager {
 
   private final NfcAdapter nfcAdapter;
   private final PendingIntent pendingIntent;
@@ -21,7 +21,7 @@ public class NFCCardManager {
   private static final String[][] TECH_LIST = new String[][] { {
       NfcA.class.getName(), NfcB.class.getName(), IsoDep.class.getName() } };
 
-  public NFCCardManager(final Activity activity) {
+  public NfcCardManager(final Activity activity) {
     this.activity = activity;
     nfcAdapter = NfcAdapter.getDefaultAdapter(activity);
     pendingIntent = PendingIntent.getActivity(activity, 0,

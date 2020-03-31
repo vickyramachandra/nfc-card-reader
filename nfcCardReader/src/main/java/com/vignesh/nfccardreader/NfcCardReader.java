@@ -15,7 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 
-public class NFCCardReader {
+public class NfcCardReader {
 
     private final static String NFC_A_TAG = "TAG: Tech [android.nfc.tech.IsoDep, android.nfc.tech.NfcA]";
     private final static String NFC_B_TAG = "TAG: Tech [android.nfc.tech.IsoDep, android.nfc.tech.NfcB]";
@@ -24,42 +24,42 @@ public class NFCCardReader {
 
 
     @Nullable
-    public NFCCardResponse readCard(Tag tag) {
+    public NfcCardResponse readCard(Tag tag) {
         if (tag != null) {
-            NFCCardResponse nfcCardResponse = null;
+            NfcCardResponse nfcCardResponse = null;
             if (tag.toString().equals(NFC_A_TAG) || tag.toString().equals(NFC_B_TAG)) {
                 try {
                     nfcCardResponse = getCardInfo(tag);
                 } catch (Exception e) {
-                    Log.e(NFCCardReader.class.getName(), e.getMessage(), e);
+                    Log.e(NfcCardReader.class.getName(), e.getMessage(), e);
                 }
 
                 if (!isException) {
                     if (nfcCardResponse != null && nfcCardResponse.getEmvCard() != null) {
                         EmvCard emvCard = nfcCardResponse.getEmvCard();
                         if (StringUtils.isNotBlank(emvCard.getCardNumber())) {
-                            return NFCCardResponse.createResponse(emvCard);
+                            return NfcCardResponse.createResponse(emvCard);
                         } else if (emvCard.isNfcLocked()) {
-                            return NFCCardResponse.createError(NFCCardError.CARD_LOCKED_WITH_NFC);
+                            return NfcCardResponse.createError(NfcCardError.CARD_LOCKED_WITH_NFC);
                         }
                     } else {
-                        return NFCCardResponse.createError(NFCCardError.UNKNOWN_EMV_CARD);
+                        return NfcCardResponse.createError(NfcCardError.UNKNOWN_EMV_CARD);
                     }
                 } else {
-                    return NFCCardResponse.createError(NFCCardError.DONOT_MOVE_CARD_SO_FAST);
+                    return NfcCardResponse.createError(NfcCardError.DONOT_MOVE_CARD_SO_FAST);
                 }
             } else {
-                return NFCCardResponse.createError(NFCCardError.UNKNOWN_EMV_CARD);
+                return NfcCardResponse.createError(NfcCardError.UNKNOWN_EMV_CARD);
             }
         }
         return null;
     }
 
-    private NFCCardResponse getCardInfo(Tag tag){
+    private NfcCardResponse getCardInfo(Tag tag){
         IsoDep isoDep = IsoDep.get(tag);
         Provider provider = new Provider();
         if (isoDep == null) {
-            return NFCCardResponse.createError(NFCCardError.DONOT_MOVE_CARD_SO_FAST);
+            return NfcCardResponse.createError(NfcCardError.DONOT_MOVE_CARD_SO_FAST);
         }
 
         isException = false;
@@ -73,14 +73,14 @@ public class NFCCardReader {
             EmvParser parser = new EmvParser(provider, true);
             EmvCard card = parser.readEmvCard();
             if (card != null) {
-                return NFCCardResponse.createResponse(card);
+                return NfcCardResponse.createResponse(card);
             }
         } catch (IOException e) {
             isException = true;
-            Log.e(NFCCardReader.class.getName(), e.getMessage(), e);
+            Log.e(NfcCardReader.class.getName(), e.getMessage(), e);
         } finally {
             IOUtils.closeQuietly(isoDep);
         }
-        return NFCCardResponse.createError(NFCCardError.UNKNOWN_EMV_CARD);
+        return NfcCardResponse.createError(NfcCardError.UNKNOWN_EMV_CARD);
     }
 }
