@@ -11,4 +11,3 @@ jobs:
       - checkout
       - run:
           command: ./gradlew build
-          
