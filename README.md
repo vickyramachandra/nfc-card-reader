@@ -18,7 +18,7 @@ allprojects {
 And include the dependency in your module's `build.gradle`
 ```groovy
 dependencies {
-  implementation 'com.github.vickyramachandra:nfc-card-reader:1.2.1'
+  implementation 'com.github.vickyramachandra:nfc-card-reader:1.3.0'
 }
 ```
 
