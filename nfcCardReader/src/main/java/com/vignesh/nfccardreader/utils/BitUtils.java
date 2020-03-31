@@ -1,6 +1,9 @@
 package com.vignesh.nfccardreader.utils;
 
 import android.util.Log;
+
+import com.vignesh.nfccardreader.BuildConfig;
+
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.text.ParseException;
@@ -245,7 +248,9 @@ public final class BitUtils {
     try {
       date = sdf.parse(dateTxt);
     } catch (ParseException e) {
-      Log.d("PARSE ERROR","Parsing date error. date:" + dateTxt + " pattern:" + pPattern, e);
+      if (BuildConfig.LOG_DEBUG_MODE) {
+        Log.d("PARSE ERROR","Parsing date error. date:" + dateTxt + " pattern:" + pPattern, e);
+      }
     }
     return date;
   }

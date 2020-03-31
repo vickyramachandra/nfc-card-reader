@@ -29,8 +29,11 @@ public final class ResponseUtils {
 	 * @return true if the response of the last command is equals to pEnum
 	 */
 	public static boolean isEquals(final byte[] pByte, final SwEnum pEnum) {
-		SwEnum val = SwEnum.getSW(pByte);
-		return val != null && val == pEnum;
+		if (pByte != null) {
+			SwEnum val = SwEnum.getSW(pByte);
+			return val != null && val == pEnum;
+		}
+		return false;
 	}
 
 

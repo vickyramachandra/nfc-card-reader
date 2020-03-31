@@ -1,7 +1,9 @@
 package com.vignesh.nfccardreader.utils;
 
 import android.nfc.tech.IsoDep;
+import android.util.Log;
 
+import com.vignesh.nfccardreader.BuildConfig;
 import com.vignesh.nfccardreader.parser.IProvider;
 
 import java.io.IOException;
@@ -22,7 +24,9 @@ public class Provider implements IProvider{
             // send command to emv card
             response = tagCom.transceive(pCommand);
         } catch (IOException e) {
-//            throw new CommunicationException(e.getMessage());
+            if (BuildConfig.LOG_DEBUG_MODE) {
+                Log.d("Provider IOException", e.getMessage());
+            }
         }
         return response;
     }

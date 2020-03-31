@@ -1,6 +1,8 @@
 package com.vignesh.nfccardreader.parser.apdu.impl;
 
 import android.util.Log;
+
+import com.vignesh.nfccardreader.BuildConfig;
 import com.vignesh.nfccardreader.iso7816emv.ITag;
 import com.vignesh.nfccardreader.iso7816emv.TagAndLength;
 import com.vignesh.nfccardreader.model.AbstractData;
@@ -97,9 +99,13 @@ public abstract class AbstractByteBean<T> extends AbstractData implements IFile 
 			try {
 				field.set(pData, pValue);
 			} catch (IllegalArgumentException e) {
-				Log.d(TAG, "Parameters of fied.set are not valid", e);
+				if (BuildConfig.LOG_DEBUG_MODE) {
+					Log.d(TAG, "Parameters of fied.set are not valid", e);
+				}
 			} catch (IllegalAccessException e) {
-				Log.d(TAG, "Impossible to set the Field :" + field.getName(), e);
+				if (BuildConfig.LOG_DEBUG_MODE) {
+					Log.d(TAG, "Impossible to set the Field :" + field.getName(), e);
+				}
 			}
 		}
 	}

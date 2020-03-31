@@ -2,6 +2,7 @@ package com.vignesh.nfccardreader.parser;
 
 import android.util.Log;
 
+import com.vignesh.nfccardreader.BuildConfig;
 import com.vignesh.nfccardreader.enums.CommandEnum;
 import com.vignesh.nfccardreader.enums.EmvCardScheme;
 import com.vignesh.nfccardreader.enums.SwEnum;
@@ -110,7 +111,9 @@ public class EmvParser {
 	 * @throws CommunicationException
 	 */
 	protected byte[] selectPaymentEnvironment() throws CommunicationException {
-		Log.d(TAG, "Select " + (contactLess ? "PPSE" : "PSE") + " Application");
+		if (BuildConfig.LOG_DEBUG_MODE) {
+			Log.d(TAG, "Select " + (contactLess ? "PPSE" : "PSE") + " Application");
+		}
 		// Select the PPSE or PSE directory
 		return provider.transceive(new CommandApdu(CommandEnum.SELECT, contactLess ? PPSE : PSE, 0).toBytes());
 	}
@@ -119,11 +122,12 @@ public class EmvParser {
 	 * Method used to get the number of pin try left
 	 *
 	 * @return the number of pin try left
-	 * @throws CommunicationException
 	 */
-	protected int getLeftPinTry() throws CommunicationException {
+	private int getLeftPinTry() throws CommunicationException {
 		int ret = UNKNOW;
-		Log.d(TAG, "Get Left PIN try");
+		if (BuildConfig.LOG_DEBUG_MODE) {
+			Log.d(TAG, "Get Left PIN try");
+		}
 
 		// Left PIN try command
 		byte[] data = provider.transceive(new CommandApdu(CommandEnum.GET_DATA, 0x9F, 0x17, 0).toBytes());
@@ -142,8 +146,6 @@ public class EmvParser {
 	 *
 	 * @param pData
 	 *            data to parse
-	 * @return
-	 * @throws CommunicationException
 	 */
 	protected byte[] parseFCIProprietaryTemplate(final byte[] pData) throws CommunicationException {
 		// Get SFI
@@ -152,7 +154,10 @@ public class EmvParser {
 		// Check SFI
 		if (data != null) {
 			int sfi = BytesUtils.byteArrayToInt(data);
-			Log.d(TAG, "SFI found:" + sfi);
+
+			if (BuildConfig.LOG_DEBUG_MODE) {
+				Log.d(TAG, "SFI found:" + sfi);
+			}
 
 			data = provider.transceive(new CommandApdu(CommandEnum.READ_RECORD, sfi, sfi << 3 | 4, 0).toBytes());
 			// If LE is not correct
@@ -161,7 +166,10 @@ public class EmvParser {
 			}
 			return data;
 		}
-		Log.d(TAG, "(FCI) Issuer Discretionary Data is already present");
+
+		if (BuildConfig.LOG_DEBUG_MODE) {
+			Log.d(TAG, "(FCI) Issuer Discretionary Data is already present");
+		}
 
 		return pData;
 	}
@@ -172,7 +180,10 @@ public class EmvParser {
 	 * @return decoded application label or null
 	 */
 	protected String extractApplicationLabel(final byte[] pData) {
-		Log.d(TAG, "Extract Application label");
+
+		if (BuildConfig.LOG_DEBUG_MODE) {
+			Log.d(TAG, "Extract Application label");
+		}
 
 		String label = null;
 		byte[] labelByte = TlvUtil.getValue(pData, EmvTags.APPLICATION_LABEL);
@@ -190,7 +201,10 @@ public class EmvParser {
 	 */
 	protected boolean readWithPSE() throws CommunicationException {
 		boolean ret = false;
-		Log.d(TAG, "Try to read card with Payment System Environment");
+
+		if (BuildConfig.LOG_DEBUG_MODE) {
+			Log.d(TAG, "Try to read card with Payment System Environment");
+		}
 		// Select the PPSE or PSE directory
 		byte[] data = selectPaymentEnvironment();
 		if (ResponseUtils.isSucceed(data)) {
@@ -211,7 +225,10 @@ public class EmvParser {
 				}
 			}
 		}
-		Log.d(TAG, (contactLess ? "PPSE" : "PSE") + " not found -> Use kown AID");
+
+		if (BuildConfig.LOG_DEBUG_MODE) {
+			Log.d(TAG, (contactLess ? "PPSE" : "PSE") + " not found -> Use kown AID");
+		}
 
 		return ret;
 	}
@@ -242,7 +259,10 @@ public class EmvParser {
 	 * Read EMV card with AID
 	 */
 	protected void readWithAID() throws CommunicationException {
-		Log.d(TAG, "Try to read card with AID");
+
+		if (BuildConfig.LOG_DEBUG_MODE) {
+			Log.d(TAG, "Try to read card with AID");
+		}
 
 		// Test each card from know EMV AID
 		for (EmvCardScheme type : EmvCardScheme.values()) {
@@ -263,7 +283,9 @@ public class EmvParser {
 	 * @throws CommunicationException
 	 */
 	protected byte[] selectAID(final byte[] pAid) throws CommunicationException {
-		Log.d(TAG, "Select AID: " + BytesUtils.bytesToString(pAid));
+		if (BuildConfig.LOG_DEBUG_MODE) {
+			Log.d(TAG, "Select AID: " + BytesUtils.bytesToString(pAid));
+		}
 		return provider.transceive(new CommandApdu(CommandEnum.SELECT, pAid, 0).toBytes());
 	}
 
@@ -287,7 +309,10 @@ public class EmvParser {
 			if (ret) {
 				// Get AID
 				String aid = BytesUtils.bytesToStringNoSpace(TlvUtil.getValue(data, EmvTags.DEDICATED_FILE_NAME));
-				Log.d(TAG, "Application label:" + pApplicationLabel + " with Aid:" + aid);
+
+				if (BuildConfig.LOG_DEBUG_MODE) {
+					Log.d(TAG, "Application label:" + pApplicationLabel + " with Aid:" + aid);
+				}
 
 				card.setAid(aid);
 				card.setType(findCardScheme(aid, card.getCardNumber()));
@@ -312,7 +337,7 @@ public class EmvParser {
 		// Get real type for french card
 		if (type == EmvCardScheme.CB) {
 			type = EmvCardScheme.getCardTypeByCardNumber(pCardNumber);
-			if (type != null) {
+			if (type != null && BuildConfig.LOG_DEBUG_MODE) {
 				Log.d(TAG, "Real type:" + type.getName());
 			}
 		}
@@ -417,7 +442,10 @@ public class EmvParser {
 	 */
 	protected List<TagAndLength> getLogFormat() throws CommunicationException {
 		List<TagAndLength> ret = new ArrayList<TagAndLength>();
-		Log.d(TAG, "Get log format");
+
+		if (BuildConfig.LOG_DEBUG_MODE) {
+			Log.d(TAG, "Get log format");
+		}
 		// Get log format
 		byte[] data = provider.transceive(new CommandApdu(CommandEnum.GET_DATA, 0x9F, 0x4F, 0).toBytes());
 		if (ResponseUtils.isSucceed(data)) {

@@ -2,6 +2,8 @@ package com.vignesh.nfccardreader.utils;
 
 import android.util.Log;
 
+import com.vignesh.nfccardreader.BuildConfig;
+
 import org.apache.commons.collections4.MultiMap;
 import org.apache.commons.collections4.map.MultiValueMap;
 import org.apache.commons.io.IOUtils;
@@ -43,7 +45,7 @@ public final class AtrUtils {
                     MAP.put(currentATR, line.replace("\t", "").trim());
                 } else if (line.startsWith("3")) { // ATR hex
                     currentATR = StringUtils.deleteWhitespace(line.toUpperCase());
-                } else {
+                } else if (BuildConfig.LOG_DEBUG_MODE) {
                     Log.d(TAG, "Encountered unexpected line in atr list: currentATR=" + currentATR + " Line(" + lineNumber
                             + ") = " + line);
                 }
