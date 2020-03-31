@@ -28,15 +28,15 @@ Make sure to handle if the device has NFC capabilities and it is enabled. In the
 ```java
 public class MainActivity extends AppCompatActivity {
 
-  private NFCCardManager nfcCardManager;
-  private NFCCardReader nfcCardReader;
+  private NfcCardManager nfcCardManager;
+  private NfcCardReader nfcCardReader;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    nfcCardManager = new NFCCardManager(this);
-    nfcCardReader = new NFCCardReader();
+    nfcCardManager = new NfcCardManager(this);
+    nfcCardReader = new NfcCardReader();
   }
   
   @Override
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     // When the card is brought closer to the device, a new intent with TAG info is dispatched
     Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
     if (tag != null) {
-      NFCCardResponse cardResponse = nfcCardReader.readCard(tag); // read the card data with tag
+      NfcCardResponse cardResponse = nfcCardReader.readCard(tag); // read the card data with tag
       if (cardResponse != null && cardResponse.getEmvCard() != null) {
         // use card data such as cardNumber, expire date etc
       }
