@@ -1,4 +1,4 @@
-# nfc-card-reader [![License](http://img.shields.io/:License-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![JitPack](https://jitpack.io/v/vickyramachandra/nfc-card-reader.svg)](https://jitpack.io/#vickyramachandra/nfc-card-reader) [![CircleCI](https://circleci.com/gh/vickyramachandra/nfc-card-reader.svg?style=svg)](https://circleci.com/gh/vickyramachandra/nfc-card-reader)
+# nfc-card-reader [![License](http://img.shields.io/:License-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![JitPack](https://jitpack.io/v/vickyramachandra/nfc-card-reader.svg)](https://jitpack.io/#vickyramachandra/nfc-card-reader) [![Build](https://github.com/vickyramachandra/nfc-card-reader/workflows/Android%20CI/badge.svg)
 
 An Android Library to read info from NFC enabled cards
 
