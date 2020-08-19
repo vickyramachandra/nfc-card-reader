@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     if (tag != null) {
       NfcCardResponse cardResponse = nfcCardReader.readCard(tag); // read the card data with tag
       if (cardResponse != null && cardResponse.getEmvCard() != null) {
-        // use card data such as cardNumber, expire date etc
+        // use card data such as card number, expiry date etc
       }
     }
   }
