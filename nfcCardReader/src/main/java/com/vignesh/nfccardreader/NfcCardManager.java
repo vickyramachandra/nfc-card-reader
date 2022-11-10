@@ -25,7 +25,7 @@ public class NfcCardManager {
     this.activity = activity;
     nfcAdapter = NfcAdapter.getDefaultAdapter(activity);
     pendingIntent = PendingIntent.getActivity(activity, 0,
-        new Intent(activity, activity.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+        new Intent(activity, activity.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), PendingIntent.FLAG_MUTABLE);
   }
 
   public void disableDispatch() {
